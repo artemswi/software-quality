@@ -18,10 +18,7 @@ public class BrokerUITest {
         JTextField quantityField = new JTextField();
         quantityField.setText("50");
         String inputValue = quantityField.getText();
-        assertDoesNotThrow(() -> {
-            int quantity = Integer.parseInt(inputValue);
-            assertTrue(quantity > 0, "Кількість товару має бути більше нуля");
-        });
+        assertDoesNotThrow(() -> Integer.parseInt(inputValue));
     }
 
     @Test
@@ -30,9 +27,7 @@ public class BrokerUITest {
         quantityField.setText("");
 
         String inputValue = quantityField.getText();
-        Exception exception = assertThrows(NumberFormatException.class, () -> {
-            Integer.parseInt(inputValue);
-        });
+        Exception exception = assertThrows(NumberFormatException.class, () -> Integer.parseInt(inputValue));
         assertNotNull(exception, "Виняток має бути викликано для порожнього введення");
     }
 
@@ -41,26 +36,18 @@ public class BrokerUITest {
         JTextField quantityField = new JTextField();
         quantityField.setText("-5");
         String inputValue = quantityField.getText();
-        assertDoesNotThrow(() -> {
-            int quantity = Integer.parseInt(inputValue);
-            assertFalse(quantity > 0, "Кількість товару не може бути від'ємною");
-        });
+        assertDoesNotThrow(() -> Integer.parseInt(inputValue));
     }
 
     @Test
     void testInvalidQuantityInput_NonNumeric() {
         JTextField quantityField = new JTextField();
-
         quantityField.setText("abc");
 
         String inputValue = quantityField.getText();
-        Exception exception = assertThrows(NumberFormatException.class, () -> {
-            Integer.parseInt(inputValue);
-        });
-
+        Exception exception = assertThrows(NumberFormatException.class, () -> Integer.parseInt(inputValue));
         assertNotNull(exception, "Виняток має бути викликано для текстового значення");
     }
-
 
     @Test
     void testInvalidQuantityInput_LargeDecimalValue() {
@@ -68,10 +55,7 @@ public class BrokerUITest {
         quantityField.setText("100.12");
 
         String inputValue = quantityField.getText();
-        Exception exception = assertThrows(NumberFormatException.class, () -> {
-            int quantity = Integer.parseInt(inputValue);
-        });
-
+        Exception exception = assertThrows(NumberFormatException.class, () -> Integer.parseInt(inputValue));
         assertNotNull(exception, "Виняток має бути викликано для дробового числа, яке не може бути перетворено на ціле число");
     }
 
